@@ -6,30 +6,35 @@ import { useParams } from 'next/navigation'
 
 // const NoteDetailsPageClient = ({noteId}:Props) => {
 const NoteDetailsClient = () => {
-  const { noteId } = useParams<{ noteId: string }>()
+  const { id } = useParams<{ id: string }>()
 
-  const { data: noteItem } = useQuery({
-    queryKey: ['note', noteId],
-    queryFn: () => fetchNoteById(noteId),
+  const { data: noteItem, isLoading, isError } = useQuery({
+    queryKey: ['note', id],
+    queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   })
-  //
-  return (
-    noteItem && (
-      <>
- <div className={css.container}>
-	<div className={css.item}>
-	  <div className={css.header}>
-	    <h2>Note title</h2>
-	  </div>
-      <p className={css.tag}>{noteItem.tag}</p>
-	  <p className={css.content}>Note content</p>
-	  <p className={css.date}>Created date</p>
-	</div>
-</div>
 
-      </>
-    )
+  if (isLoading) {
+    return <div>Loading, please wait...</div>
+  }
+
+  if (isError || !noteItem) {
+    return <div>Something went wrong.</div>
+  }
+
+  const created = noteItem.createdAt ? new Date(noteItem.createdAt).toLocaleString() : ''
+
+  return (
+    <div className={css.container}>
+      <div className={css.item}>
+        <div className={css.header}>
+          <h2>{noteItem.title}</h2>
+        </div>
+        <p className={css.tag}>{noteItem.tag}</p>
+        <p className={css.content}>{noteItem.content}</p>
+        <p className={css.date}>{created}</p>
+      </div>
+    </div>
   )
 }
 
