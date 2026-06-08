@@ -2,12 +2,12 @@ import React from 'react'
 
 interface Props {
   children: React.ReactNode
-  parallel: React.ReactNode
+  sidebar: React.ReactNode
 }
-const NoteListLayout = ({ children, parallel }: Props) => {
+const NoteListLayout = ({ children, sidebar }: Props) => {
   return (
     <div >
-      {parallel}
+      {sidebar}
       {children}
     </div>
   )
