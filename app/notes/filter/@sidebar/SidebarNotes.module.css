@@ -1,3 +1,9 @@
+.sidebar {
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  min-height: 100vh;
+}
+
 .menuList {
   list-style-type: none;
   margin: 0;
@@ -5,19 +11,29 @@
 }
 
 .menuItem {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .menuLink {
   text-decoration: none;
-  color: white;
-  font-size: 16px;
+  color: #333;
+  font-size: 14px;
   display: block;
-  padding: 8px 16px;
-  transition: background-color 0.3s ease;
+  padding: 10px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
 }
 
 .menuLink:hover {
-  background-color: #444;
-  color: #ddd;
+  background-color: #f0f0f0;
+  color: #000;
+  border-left-color: #007bff;
+}
+
+.menuLink.active {
+  background-color: #e7f3ff;
+  color: #0056b3;
+  border-left-color: #0056b3;
+  font-weight: 600;
 }

@@ -1,5 +1,6 @@
-import { getNotes } from '@/lib/api'
+import { getNotesByTag } from '@/lib/api'
 import Link from 'next/link'
+import css from "../../NotesPage.module.css"
 
 interface Props {
   params: Promise<{ filters: string[] }>
@@ -7,18 +8,25 @@ interface Props {
 
 const NotesFilterPage = async ({ params }: Props) => {
   const res = await params
-  const categoryId = res.filters[0]
-  const title = res.filters[1]
+  const tag = res.filters?.[0] || 'all'
 
-  const noteResponse = await getNotes(categoryId === 'all' ? '' : categoryId, title)
+  // Отримуємо нотатки, відфільтровані за тегом
+  const noteResponse = await getNotesByTag(tag === 'all' ? undefined : tag)
 
   return (
-    <div>
-      {noteResponse?.notes.map((note) => (
-        <li key={note.id}>
-          <Link href={`/notes/${note.id}`}>{note.title}</Link>
-        </li>
-      ))}
+    <div className={css.container}>
+      <h2>Notes {tag !== 'all' ? `- ${tag}` : ''}</h2>
+      {noteResponse?.notes && noteResponse.notes.length > 0 ? (
+        <ul>
+          {noteResponse.notes.map((note) => (
+            <li key={note.id}>
+              <Link href={`/notes/${note.id}`}>{note.title}</Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No notes found</p>
+      )}
     </div>
   )
 }

@@ -1,14 +1,18 @@
 import React from 'react'
+import css from "../NotesPage.module.css"
 
 interface Props {
   children: React.ReactNode
-  sidebar: React.ReactNode
+  sidebar?: React.ReactNode
 }
+
 const NoteListLayout = ({ children, sidebar }: Props) => {
   return (
-    <div >
+    <div className={css.filterLayout}>
       {sidebar}
-      {children}
+      <div className={css.mainContent}>
+        {children}
+      </div>
     </div>
   )
 }

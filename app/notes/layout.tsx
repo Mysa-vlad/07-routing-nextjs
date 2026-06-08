@@ -3,7 +3,7 @@ import React from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
-  sidebar: React.ReactNode; 
+  sidebar?: React.ReactNode; 
 }
 
 export default function NotesLayout({ children, sidebar }: LayoutProps) {

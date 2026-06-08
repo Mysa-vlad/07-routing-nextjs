@@ -96,3 +96,18 @@ export const getNotes = async (categoryId?: string, title?: string) => {
   
   return data;
 };
+
+export const getNotesByTag = async (tag?: string): Promise<ResponseNoteList> => {
+  const queryParams: Record<string, string> = {};
+
+  // Якщо тег не "all" і він передається, додаємо його до запиту
+  if (tag && tag !== "all" && tag !== "undefined" && tag.trim() !== "") {
+    queryParams.tag = tag;
+  }
+
+  const { data } = await axiosInstance.get<ResponseNoteList>('/notes', { 
+    params: queryParams 
+  });
+  
+  return data;
+};
