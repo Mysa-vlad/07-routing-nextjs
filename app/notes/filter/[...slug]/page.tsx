@@ -3,12 +3,12 @@ import Link from 'next/link'
 import css from "../../NotesPage.module.css"
 
 interface Props {
-  params: Promise<{ filters: string[] }>
+  params: Promise<{ slug: string[] }>
 }
 
 const NotesFilterPage = async ({ params }: Props) => {
   const res = await params
-  const tag = res.filters?.[0] || 'all'
+  const tag = res.slug?.[0] || 'all'
 
   // Отримуємо нотатки, відфільтровані за тегом
   const noteResponse = await getNotesByTag(tag === 'all' ? undefined : tag)
