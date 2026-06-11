@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-// Додали імпорт типу відповіді FetchNotesResponse для типізації useQuery
 import { fetchNotes, type NoteTag, type FetchNotesResponse } from '@/lib/api'
 import SearchBox from '@/components/SearchBox/SearchBox' 
 import Pagination from '@/components/Pagination/Pagination'
@@ -22,14 +21,14 @@ export default function NotesClient({ tag }: NotesClientProps) {
   const [debouncedSearch, setDebouncedSearch] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
-  // 1. ВИПРАВЛЕННЯ ESLint: Безпечне синхронне скидання сторінки при зміні тегу
+
   const [prevTag, setPrevTag] = useState<string>(tag)
   if (tag !== prevTag) {
     setPage(1)
     setPrevTag(tag)
   }
 
-  // Дебаунс для пошуку залишається як є
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search)
@@ -41,7 +40,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
 
   const currentTag = tag === 'all' ? undefined : (tag as NoteTag)
 
-  // 2. ВИПРАВЛЕННЯ TYPESCRIPT: Явно вказуємо дженерик-тип <FetchNotesResponse>
+
   const { data, isLoading, isError } = useQuery<FetchNotesResponse>({
     queryKey: ['notes', currentTag, page, debouncedSearch],
     queryFn: () => fetchNotes({ 
@@ -59,7 +58,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
         <SearchBox value={search} onChange={setSearch} />
         
         <button 
-          className={css.createBtn} 
+          className={css.button} 
           onClick={() => setIsModalOpen(true)}
         >
           Create Note
